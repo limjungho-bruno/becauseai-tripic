@@ -31,62 +31,78 @@ export default function TextPage() {
 
     try {
       console.log("analysisData : ", analysisData)
-      const SUFFIX_PROMPT = " 이 정보와 가장 유사한 여행 상품 5개를 리스트로 답변. 리스트 이외의 다른 문장형 답변은 불필요."
+
+      const SUFFIX_PROMPT = `
+        이 태그 정보와 가장 유사한 여행 상품 5개를 결정해야함. 각 여행 상품에 대해 각각 다음의 정보를 '|' 문자를 구분자로 하여 출력. 모든 결과 출력의 개행 문자는 반드시 '|' 로 출력해야 함.
+        1. 여행 상품 이름
+        2. 여행 상품 이름 5개에 대해 각각 가장 유사한 태그 4개. 태그 4개는 각각 '#태그1 #태그2 #태그3 #태그4' 형식으로 출력.
+        3. 여행 상품의 예상되는 가격대. 자료가 충분하지 않을 경우 예상되는 금액을 추론하여 상상하여 작성.
+        별다른 특징은 정리하지 않아야 함. 다른 문장형 답변은 불필요.
+        종합된 태그를 바탕으로 가장 유사한 태그 6개를 정하여 유사한 순서대로 '#태그1 #태그2 #태그3 #태그4 #태그5 #태그6' 형식으로 가장 마지막에 출력.
+        `
+
+    const finalInput = analysisData.data.text + SUFFIX_PROMPT;
+
+    console.log("Final input :", finalInput)
+
       const response = await fetch("https://rq7xwcscz0.execute-api.ap-northeast-2.amazonaws.com/Prod/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({'input':analysisData.data.text+SUFFIX_PROMPT}),
+        body: JSON.stringify({'input':finalInput}),
       })
 
       if (!response.ok) throw new Error("Analysis failed")
 
       const result = await response.json()
+      const info_list = result.output.split('|')
+
+      console.log("Info List:", info_list);
 
       const pkg_list = result.output.split('\n')
       updatePreferences({
-        tags: [],
+        tags: info_list[15] ? info_list[15].split(' ') : ["#여행추천", "#휴양", "#문화탐방", "#자연경관", "#액티비티", "#힐링"],
         packages: [
               {
                 id: 1,
                 rank: 1,
-                title: pkg_list[0],
-                description: "description 1st",
-                price: "price 1st",
-                tags: ["#자연", "#휴양", "#한적함"],
+                title: info_list[0] ? info_list[0] : "title 1st",
+                description: info_list[1] ? info_list[1] : "description 1st",
+                price: info_list[2] ? info_list[2] : "price 1st",
+                tags: info_list[1] ? info_list[1] : ["#여행", "#추천", "#휴양"],
               },
               {
                 id: 2,
                 rank: 2,
-                title: pkg_list[1],
-                description: "description 2nd",
-                price: "price 2nd",
-                tags: ["#힐링", "#온천", "#해변"],
+                title: info_list[3]? info_list[3] : "title 2nd",
+                description: info_list[4] ? info_list[4] : "description 2nd",
+                price: info_list[5] ? info_list[5] : "price 2nd",
+                tags: info_list[4] ? info_list[4] : ["#여행", "#추천", "#휴양"],
               },
               {
                 id: 3,
                 rank: 3,
-                title: pkg_list[2],
-                description: "description 3rd",
-                price: "price 3rd",
-                tags: ["#자연", "#액티비티", "#산림욕"],
+                title: info_list[6]? info_list[6] : "title 3rd",
+                description: info_list[7] ? info_list[7] : "description 3rd",
+                price: info_list[8] ? info_list[8] : "price 3rd",
+                tags: info_list[7] ? info_list[7] : ["#여행", "#추천", "#휴양"],
               },
               {
                 id: 4,
                 rank: 4,
-                title: pkg_list[3],
-                description: "description 4th",
-                price: "price 4th",
-                tags: ["#문화", "#카페", "#해안"],
+                title: info_list[9]? info_list[9] : "title 4th",
+                description: info_list[10] ? info_list[10] : "description 4th",
+                price: info_list[11] ? info_list[11] : "price 4th",
+                tags: info_list[10] ? info_list[10] : ["#여행", "#추천", "#휴양"],
               },
               {
                 id: 5,
                 rank: 5,
-                title: pkg_list[4],
-                description: "description 5th",
-                price: "price 5th",
-                tags: ["#하이킹", "#산", "#자연"],
+                title: info_list[12]? info_list[12] : "title 5th",
+                description: info_list[13] ? info_list[13] : "description 5th",
+                price: info_list[14] ? info_list[14] : "price 5th",
+                tags: info_list[13] ? info_list[13] : ["#여행", "#추천", "#휴양"],
               }
-            ], //result.output,
+            ], 
         text_output : result.output
       })
       console.log(result)
@@ -106,8 +122,7 @@ export default function TextPage() {
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600"></div>
-            <span className="font-bold text-lg text-slate-900 dark:text-white">Tripic</span>
+            <img src="/tripic-logo.png" alt="TRIPIC" className="h-16 w-auto" />
           </Link>
           <div className="w-12"></div>
         </div>

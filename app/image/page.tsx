@@ -433,7 +433,7 @@ export default function ImagePage() {
   const [shuffleCount, setShuffleCount] = useState(0)
   const [showResetModal, setShowResetModal] = useState(false)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
-  const maxShuffles = 100
+  const maxShuffles = 3
 
   useEffect(() => {
     setCurrentRound(0)
@@ -553,10 +553,10 @@ export default function ImagePage() {
       // const description_list = result2.output.split('|')
       // console.log("Description List:", description_list);
 
-      updatePreferences({
-        tags: result.tags,
-        packages: result.packages,
-      })
+      // updatePreferences({
+      //   tags: result.tags,
+      //   packages: result.packages,
+      // })
       updatePreferences({
         tags: info_list[15] ? info_list[15].split(' ') : ["#여행추천", "#휴양", "#문화탐방", "#자연경관", "#액티비티", "#힐링"],
         packages: [
@@ -648,8 +648,7 @@ export default function ImagePage() {
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600"></div>
-            <span className="font-bold text-lg text-slate-900 dark:text-white">Tripic</span>
+            <img src="/tripic-logo.png" alt="TRIPIC" className="h-16 w-auto" />
           </Link>
           <button
             onClick={() => setShowResetModal(true)}

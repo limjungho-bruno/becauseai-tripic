@@ -2,18 +2,44 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { ChevronRight, ImageIcon, PenTool } from "lucide-react"
+import { ChevronRight, ImageIcon, PenTool, ChevronDown } from "lucide-react"
 
 export default function HomePage() {
   const [activeSection, setActiveSection] = useState(0)
   const [isScrolling, setIsScrolling] = useState(false)
+  const [showScrollIndicator, setShowScrollIndicator] = useState(true)
+  const [showScrollIndicator2, setShowScrollIndicator2] = useState(false)
+  const [showScrollIndicator3, setShowScrollIndicator3] = useState(false)
 
   // Handle scroll snap to sections
   useEffect(() => {
     const handleScroll = (e: Event) => {
-      // Scroll position tracking for smooth section transitions
+      const scrollElement = e.target as HTMLElement
+      if (scrollElement.scrollTop > 100) {
+        setShowScrollIndicator(false)
+      } else {
+        setShowScrollIndicator(true)
+      }
+
+      if (
+        scrollElement.scrollTop > scrollElement.clientHeight * 0.8 &&
+        scrollElement.scrollTop < scrollElement.clientHeight * 1.8
+      ) {
+        setShowScrollIndicator2(true)
+      } else {
+        setShowScrollIndicator2(false)
+      }
+
+      if (
+        scrollElement.scrollTop > scrollElement.clientHeight * 1.8 &&
+        scrollElement.scrollTop < scrollElement.clientHeight * 2.8
+      ) {
+        setShowScrollIndicator3(true)
+      } else {
+        setShowScrollIndicator3(false)
+      }
+
       if (!isScrolling) {
-        const scrollElement = e.target as HTMLElement
         const scrollPosition = scrollElement.scrollTop
         const sectionHeight = scrollElement.clientHeight
         const newSection = Math.round(scrollPosition / sectionHeight)
@@ -49,8 +75,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600"></div>
-            <span className="font-bold text-lg text-slate-900 dark:text-white">Tripic</span>
+            <img src="/tripic-logo.png" alt="TRIPIC" className="h-16 w-auto" />
           </Link>
 
           {/* Navigation dots */}
@@ -88,14 +113,29 @@ export default function HomePage() {
             <h1 className="text-5xl md:text-6xl font-bold mb-4 text-slate-900 dark:text-white">여행</h1>
             <p className="text-xl md:text-2xl text-slate-700 dark:text-slate-300">누구의 취향에 맞추고 있나요?</p>
           </div>
+
+          {showScrollIndicator && (
+            <div
+              className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 animate-bounce cursor-pointer"
+              onClick={() => scrollToSection(1)}
+            >
+              <ChevronDown className="w-6 h-6 text-slate-400 dark:text-slate-500" />
+            </div>
+          )}
         </section>
 
-        {/* Section 2: Benefit - "Rest" */}
-        <section className="scroll-snap-item w-full h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 dark:from-slate-900 dark:to-slate-800">
-          <div className="max-w-2xl mx-auto px-4 text-center">
-            <div className="mb-8">
-              <div className="w-32 h-32 mx-auto bg-gradient-to-br from-blue-400 to-blue-500 rounded-3xl shadow-lg"></div>
-            </div>
+        {/* Section 2: Benefit - "Rest" with landmarks background */}
+        <section className="scroll-snap-item w-full h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100 dark:from-slate-900 dark:to-slate-800">
+          <div className="absolute inset-0 -top-[60px]">
+            <img
+              src="/landmarks-bg.png"
+              alt="Landmarks 3D background"
+              className="w-full h-full object-cover object-top opacity-85"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-100/50 to-blue-100/95 dark:via-slate-950/50 dark:to-slate-950/95"></div>
+          </div>
+
+          <div className="relative z-10 max-w-2xl mx-auto px-4 text-center">
             <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
               남들이 추천한 명소 대신,
             </h2>
@@ -103,14 +143,30 @@ export default function HomePage() {
               AI가 분석한 당신의 취향을 기반으로 선별된 여행을 경험하세요
             </p>
           </div>
+
+          {showScrollIndicator2 && (
+            <div
+              className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 animate-bounce cursor-pointer"
+              onClick={() => scrollToSection(2)}
+            >
+              <ChevronDown className="w-6 h-6 text-slate-400 dark:text-slate-500" />
+            </div>
+          )}
         </section>
 
         {/* Section 3: Benefit - "Personalization" */}
-        <section className="scroll-snap-item w-full h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900">
-          <div className="max-w-2xl mx-auto px-4 text-center">
-            <div className="mb-8">
-              <div className="w-32 h-32 mx-auto bg-gradient-to-br from-blue-500 to-blue-600 rounded-3xl shadow-lg"></div>
-            </div>
+        <section className="scroll-snap-item w-full h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 relative overflow-hidden">
+          {/* Background image */}
+          <div className="absolute inset-0 -top-[60px]">
+            <img
+              src="/travel-items-bg.png"
+              alt="Travel items 3D background"
+              className="w-full h-full object-cover object-top opacity-85"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-slate-100/50 to-slate-100/95 dark:via-slate-900/50 dark:to-slate-900/95"></div>
+          </div>
+
+          <div className="relative z-10 max-w-2xl mx-auto px-4 text-center">
             <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
               진짜 내가 좋아할 곳으로.
             </h2>
@@ -118,6 +174,15 @@ export default function HomePage() {
               사진, 텍스트 중 원하는 방식으로 당신의 여행 스타일을 알려주세요
             </p>
           </div>
+
+          {showScrollIndicator3 && (
+            <div
+              className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 animate-bounce cursor-pointer"
+              onClick={() => scrollToSection(3)}
+            >
+              <ChevronDown className="w-6 h-6 text-slate-400 dark:text-slate-500" />
+            </div>
+          )}
         </section>
 
         {/* Section 4: CTA Cards */}

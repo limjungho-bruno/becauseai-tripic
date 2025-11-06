@@ -63,12 +63,10 @@ export default function ResultsPage() {
     return rank.toString()
   }
 
-  const getRankColor = (rank: number) => {
-    if (rank === 1) return "from-yellow-400 to-yellow-600"
+const getRankColor = (rank: number) => {
+    if (rank === 1) return "from-amber-200 to-amber-400"
     if (rank === 2) return "from-gray-300 to-gray-500"
-    if (rank === 3) return "from-orange-400 to-orange-600"
-    if (rank === 4) return "from-blue-400 to-blue-600"
-    return "from-purple-400 to-purple-600"
+    return "from-yellow-400 to-yellow-600"
   }
 
   useEffect(() => {
@@ -103,8 +101,7 @@ export default function ResultsPage() {
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600"></div>
-            <span className="font-bold text-lg text-slate-900 dark:text-white">Tripic</span>
+            <img src="/tripic-logo.png" alt="TRIPIC" className="h-16 w-auto" />
           </Link>
           <div className="w-12"></div>
         </div>
@@ -115,7 +112,6 @@ export default function ResultsPage() {
         {/* Summary section - 20% */}
         <section className="bg-gradient-to-b from-blue-50 to-white dark:from-blue-950 dark:to-slate-950 py-8 px-4 border-b border-slate-200 dark:border-slate-800">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">분석 결과</h2>
             <div className="flex flex-wrap gap-2">
               {tags.map((tag, idx) => (
                 <span
@@ -173,9 +169,6 @@ export default function ResultsPage() {
                           className={`w-12 h-12 bg-gradient-to-br ${getRankColor(currentPackage.rank)} rounded-full flex items-center justify-center shadow-lg`}
                         >
                           <span className="text-white font-bold text-lg">{getRankDisplay(currentPackage.rank)}</span>
-                        </div>
-                        <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center shadow-lg">
-                          <span className="text-white text-sm font-bold">★</span>
                         </div>
                       </div>
 
