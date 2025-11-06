@@ -1,0 +1,17 @@
+version: 1.0
+frontend:
+  phases:
+    preBuild:
+      commands:
+        # 1. npm을 사용하여 pnpm을 전역적으로 설치
+        - npm install -g pnpm
+        # 2. 이제 pnpm을 사용하여 의존성 설치
+        - pnpm install 
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    # Next.js의 경우 .next 폴더를 지정하거나 output: export 설정을 확인
+    baseDirectory: .next 
+    files:
+      - '**/*'
