@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <head>
-        <title>TripTaste - 당신의 취향에 맞는 여행</title>
+        <title>TRIPIC</title>
       </head>
       <body className={`font-sans antialiased ${_geist.className}`}>
         <TripTasteProvider>

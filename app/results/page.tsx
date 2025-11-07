@@ -95,7 +95,7 @@ const getRankColor = (rank: number) => {
   const nextPackage = packages[getNextIndex()]
 
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-950 flex flex-col">
+    <div className="min-h-screen bg-blue-50 dark:bg-slate-950 flex flex-col ">
       {/* Header */}
       <header className="sticky top-0 z-40 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -110,7 +110,7 @@ const getRankColor = (rank: number) => {
       {/* Main content */}
       <main className="flex-1 flex flex-col">
         {/* Summary section - 20% */}
-        <section className="bg-gradient-to-b from-blue-50 to-white dark:from-blue-950 dark:to-slate-950 py-8 px-4 border-b border-slate-200 dark:border-slate-800">
+        <section className="bg-gradient-to-b from-blue-50 to-white dark:from-blue-950 dark:to-slate-950 py-8 px-4">
           <div className="max-w-6xl mx-auto">
             <div className="flex flex-wrap gap-2">
               {tags.map((tag, idx) => (
@@ -127,7 +127,7 @@ const getRankColor = (rank: number) => {
 
         {/* Carousel section - 70% */}
         <section
-          className="flex-1 flex items-center justify-center py-12 px-4"
+          className="flex-1 flex items-center justify-center py-12 px-4 bg-white"
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
         >
@@ -187,7 +187,7 @@ const getRankColor = (rank: number) => {
                         <div className="text-3xl font-bold text-blue-600 mb-4">{currentPackage.price}</div>
                         <button
                           onClick={() => {}}
-                          className="w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-all"
+                          className="w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-all cursor-pointer"
                         >
                           자세히 보기
                         </button>
@@ -226,7 +226,7 @@ const getRankColor = (rank: number) => {
               {/* Left arrow */}
               <button
                 onClick={handlePrevious}
-                className="absolute left-0 z-20 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:shadow-lg transition-all hover:bg-slate-50 dark:hover:bg-slate-800"
+                className="absolute left-0 z-20 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:shadow-lg transition-all hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer"
                 aria-label="Previous package"
               >
                 <ChevronLeft className="w-6 h-6 text-blue-600" />
@@ -235,7 +235,7 @@ const getRankColor = (rank: number) => {
               {/* Right arrow */}
               <button
                 onClick={handleNext}
-                className="absolute right-0 z-20 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:shadow-lg transition-all hover:bg-slate-50 dark:hover:bg-slate-800"
+                className="absolute right-0 z-20 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:shadow-lg transition-all hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer"
                 aria-label="Next package"
               >
                 <ChevronRight className="w-6 h-6 text-blue-600" />
@@ -248,7 +248,7 @@ const getRankColor = (rank: number) => {
                 <button
                   key={idx}
                   onClick={() => setCurrentIndex(idx)}
-                  className={`transition-all ${
+                  className={`cursor-pointer transition-all ${
                     idx === currentIndex
                       ? "w-8 h-3 bg-blue-600 rounded-full"
                       : "w-3 h-3 bg-slate-300 dark:bg-slate-600 rounded-full hover:bg-slate-400 dark:hover:bg-slate-500"
