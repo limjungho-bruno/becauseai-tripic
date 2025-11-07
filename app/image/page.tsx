@@ -459,7 +459,7 @@ export default function ImagePage() {
 
   const handleShuffle = () => {
     if (shuffleCount >= maxShuffles) {
-      alert("다시 섞기는 최대 2번까지만 가능합니다!")
+      alert("다시 섞기는 최대 3번까지만 가능합니다!")
       return
     }
 
@@ -474,10 +474,17 @@ export default function ImagePage() {
     newRounds[currentRound] = [imageId]
     setSelectedImageRounds(newRounds)
 
+    console.log('Selected Image ID:', imageId);
+
     // Mark as used
-    const newUsed = new Set(usedImageIds)
-    newUsed.add(imageId)
-    setUsedImageIds(newUsed)
+    // const newUsed = new Set(usedImageIds)
+    // newUsed.add(imageId)
+    // setUsedImageIds(newUsed)
+
+    usedImageIds.add(imageId)
+
+    // console.log('newUsed:', newUsed);
+    console.log("Used Image IDs:", usedImageIds)
 
     // Move to next round or complete
     setTimeout(() => {
